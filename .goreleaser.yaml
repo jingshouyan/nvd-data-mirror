@@ -33,3 +33,5 @@ dockers:
       - "jingshouyan/nvd-data-mirror:{{ .Tag }}"
     goos: linux
     goarch: amd64
+    extra_files:
+    - docker
