@@ -26,7 +26,7 @@ RUN apk update                                               && \
     chown -R $user:$user /tmp/nvd                            && \
     chown -R $user:$user /usr/local/apache2/htdocs           && \
     rm -v /usr/local/apache2/htdocs/index.html               && \
-    chmod +x $user:$user /mirror.sh
+    chmod +x /mirror.sh
 
 
 EXPOSE 80/tcp
