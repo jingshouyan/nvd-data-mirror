@@ -27,7 +27,7 @@ func init() {
 	pflag.StringVar(&Cve11ModifiedMetaUrl, "cve-modified-meta-url", "https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-modified.meta", "NVD CVE 1.1 JSON modified meta url")
 	pflag.StringVar(&Cve11RecentMetaUrl, "cve-recent-meta-url", "https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-recent.meta", "NVD CVE 1.1 JSON recent meta url")
 	pflag.StringVar(&Cve11BaseMetaUrl, "cve-base-meta-url", "https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-%d.meta", "NVD CVE 1.1 JSON base meta url")
-	pflag.StringVar(&RetireJsUrl, "retire-json-url", "https://raw.githubusercontent.com/RetireJS/retire.js/master/repository/jsrepository.json", "retrieJs repository url")
+	pflag.StringVar(&RetireJsUrl, "retire-json-url", "https://cdn.jsdelivr.net/gh/Retirejs/retire.js@master/repository/jsrepository.json", "retrieJs repository url")
 	pflag.IntVar(&StartYear, "start-year", 2002, "Start year")
 	pflag.IntVar(&EndYear, "end-year", time.Now().Year(), "End year")
 	pflag.StringVar(&TmpDir, "tmp-dir", "./tmp/", "Output directory")

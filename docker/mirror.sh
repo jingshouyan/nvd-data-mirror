@@ -2,4 +2,4 @@
 
 echo "Updating..."
 
-/nvd-data-mirror --tmp-dir=/tmp/nvd --output-dir=/usr/local/apache2/htdocs 
+/nvd-data-mirror --tmp-dir=/tmp/nvd --output-dir=/usr/local/apache2/htdocs $CLI_OPTIONS
