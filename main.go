@@ -10,7 +10,15 @@ import (
 	cp "github.com/otiai10/copy"
 )
 
+var (
+	version = "dev"
+	commit  = "none"
+	date    = "unknown"
+	builtBy = "unknown"
+)
+
 func main() {
+	log.Printf("nvd-data-mirror version: %s, commit: %s, built by: %s, built at: %s\n", version, commit, builtBy, date)
 	utils.SyncVnd(config.Cve11ModifiedMetaUrl, config.Cve11ModifiedJsonUrl, config.TmpDir)
 	utils.SyncVnd(config.Cve11RecentMetaUrl, config.Cve11RecentJsonUrl, config.TmpDir)
 	for i := config.StartYear; i <= config.EndYear; i++ {
