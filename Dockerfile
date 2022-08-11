@@ -25,10 +25,10 @@ RUN apk update                                               && \
     rm -v /usr/local/apache2/htdocs/index.html
 
 COPY nvd-data-mirror /
-COPY ../docker/conf/supervisord.conf  /etc/supervisor/conf.d/supervisord.conf
-COPY ../docker/scripts/mirror.sh  /mirror.sh
-COPY ../docker/crontab/mirror  /etc/crontabs/mirror
-COPY ../docker/conf/mirror.conf /usr/local/apache2/conf
+COPY docker/conf/supervisord.conf  /etc/supervisor/conf.d/supervisord.conf
+COPY docker/scripts/mirror.sh  /mirror.sh
+COPY docker/crontab/mirror  /etc/crontabs/mirror
+COPY docker/conf/mirror.conf /usr/local/apache2/conf
 EXPOSE 80/tcp
 
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/conf.d/supervisord.conf", "-l", "/var/log/supervisord.log", "-j", "/var/run/supervisord.pid"]
