@@ -15,6 +15,9 @@ LABEL org.label-schema.vendor="jingshouyan"
 
 ENV user=mirror
 
+COPY nvd-data-mirror /  docker/ /
+
+
 RUN apk update                                               && \
     apk add --no-cache dcron nss supervisor                  && \
     addgroup -S $user                                        && \
@@ -22,13 +25,10 @@ RUN apk update                                               && \
     mkdir -p /tmp/nvd                                        && \
     chown -R $user:$user /tmp/nvd                            && \
     chown -R $user:$user /usr/local/apache2/htdocs           && \
-    rm -v /usr/local/apache2/htdocs/index.html
+    rm -v /usr/local/apache2/htdocs/index.html               && \
+    chmod +x $user:$user /mirror.sh
 
-COPY nvd-data-mirror /
-COPY docker/conf/supervisord.conf  /etc/supervisor/conf.d/supervisord.conf
-COPY docker/scripts/mirror.sh  /mirror.sh
-COPY docker/crontab/mirror  /etc/crontabs/mirror
-COPY docker/conf/mirror.conf /usr/local/apache2/conf
+
 EXPOSE 80/tcp
 
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/conf.d/supervisord.conf", "-l", "/var/log/supervisord.log", "-j", "/var/run/supervisord.pid"]
