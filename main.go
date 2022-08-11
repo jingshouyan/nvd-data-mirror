@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"strings"
 
 	"github.com/jingshouyan/nvd-data-mirror/config"
 	"github.com/jingshouyan/nvd-data-mirror/utils"
@@ -19,6 +20,11 @@ func main() {
 	}
 	utils.SyncRetireJs(config.RetireJsUrl, config.TmpDir)
 	log.Println("Copy files [", config.TmpDir, "] to [", config.OutputDir, "]")
-	cp.Copy(config.TmpDir, config.OutputDir)
+	ops := cp.Options{
+		Skip: func(path string) (bool, error) {
+			return strings.Contains(path, ".tmp"), nil
+		},
+	}
+	cp.Copy(config.TmpDir, config.OutputDir, ops)
 	log.Println("Done.")
 }
