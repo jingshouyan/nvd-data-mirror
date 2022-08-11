@@ -3,8 +3,10 @@ package utils
 import (
 	"compress/gzip"
 	"crypto/sha256"
+	"encoding/json"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"os"
 	"strings"
@@ -16,6 +18,38 @@ import (
 const (
 	gz string = ".gz"
 )
+
+func SyncRetireJs(retireJsRrl, outDir string) {
+	log.Println("---------- Begin Sync retire.js-----------")
+	err := syncRetireJs(retireJsRrl, outDir)
+	if err != nil {
+		log.Println(err)
+	}
+	log.Println("---------- End Sync retire.js-----------")
+}
+
+func syncRetireJs(retireJsRrl, outDir string) error {
+	subfix := ".tmp." + time.Now().Format("2006-01-02_15-04-05")
+	tmp, err := Download(retireJsRrl, outDir, subfix)
+	if err != nil {
+		return err
+	}
+	if validJson(tmp) {
+		replace(tmp, tmp[:len(tmp)-len(subfix)])
+	} else {
+		log.Println("invalid json, remove", tmp)
+		os.Remove(tmp)
+	}
+	return nil
+}
+
+func validJson(filepath string) bool {
+	b, err := ioutil.ReadFile(filepath)
+	if err != nil {
+		return false
+	}
+	return json.Valid(b)
+}
 
 func SyncVnd(metaUrl, dataUrl, outDir string) {
 	idx := strings.LastIndex(metaUrl, "/")

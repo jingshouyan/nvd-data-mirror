@@ -17,6 +17,7 @@ func main() {
 		dataUrl := fmt.Sprintf(config.Cve11BaseJsonUrl, i)
 		utils.SyncVnd(metaUrl, dataUrl, config.TmpDir)
 	}
+	utils.SyncRetireJs(config.RetireJsUrl, config.TmpDir)
 	log.Println("Copy files [", config.TmpDir, "] to [", config.OutputDir, "]")
 	cp.Copy(config.TmpDir, config.OutputDir)
 	log.Println("Done.")
