@@ -24,11 +24,11 @@ RUN apk update                                               && \
     chown -R $user:$user /usr/local/apache2/htdocs           && \
     rm -v /usr/local/apache2/htdocs/index.html
 
-COPY ["/docker/conf/supervisord.conf", "/etc/supervisor/conf.d/supervisord.conf"]
-COPY ["/docker/scripts/mirror.sh", "/mirror.sh"]
-COPY ["/docker/crontab/mirror", "/etc/crontabs/mirror"]
-COPY ["/docker/conf/mirror.conf", "/usr/local/apache2/conf"]
-COPY ["/nvd-data-mirror", "/"]
+COPY docker/conf/supervisord.conf, /etc/supervisor/conf.d/supervisord.conf
+COPY docker/scripts/mirror.sh, /mirror.sh
+COPY docker/crontab/mirror, /etc/crontabs/mirror
+COPY docker/conf/mirror.conf, /usr/local/apache2/conf
+COPY nvd-data-mirror, /
 
 EXPOSE 80/tcp
 
