@@ -1,3 +1,6 @@
+FROM alpine as certs
+RUN apk update && apk add ca-certificates
+
 FROM busybox:stable
 
 ARG BUILD_DATE
@@ -17,6 +20,7 @@ LABEL org.label-schema.vendor="jingshouyan"
 LABEL org.label-schema.version=$BUILD_VERSION
 
 COPY nvd-data-mirror /  docker/entry-point.sh /
+COPY --from=certs /etc/ssl/certs /etc/ssl/certs
 
 RUN chmod +x /entry-point.sh
 
