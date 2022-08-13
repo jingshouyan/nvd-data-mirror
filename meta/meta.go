@@ -2,9 +2,10 @@ package meta
 
 import (
 	"io/ioutil"
-	"log"
 	"strconv"
 	"strings"
+
+	"github.com/jingshouyan/nvd-data-mirror/log"
 )
 
 type Meta struct {

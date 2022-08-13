@@ -7,10 +7,11 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 	"os"
 	"strings"
 	"time"
+
+	"github.com/jingshouyan/nvd-data-mirror/log"
 
 	"github.com/jingshouyan/nvd-data-mirror/meta"
 )
@@ -155,7 +156,7 @@ func sha(jsonFile string) string {
 
 	h := sha256.New()
 	if _, err := io.Copy(h, f); err != nil {
-		log.Fatal(err)
+		log.Println("sha256", err)
 	}
 	return strings.ToUpper(fmt.Sprintf("%x", h.Sum(nil)))
 }

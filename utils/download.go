@@ -2,11 +2,12 @@ package utils
 
 import (
 	"io"
-	"log"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/jingshouyan/nvd-data-mirror/log"
 )
 
 func Download(url, outDir, subfix string) (string, error) {

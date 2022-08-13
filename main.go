@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"strings"
+
+	"github.com/jingshouyan/nvd-data-mirror/log"
 
 	"github.com/jingshouyan/nvd-data-mirror/config"
 	"github.com/jingshouyan/nvd-data-mirror/utils"
