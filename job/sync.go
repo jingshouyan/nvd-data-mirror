@@ -15,8 +15,8 @@ import (
 var c = cron.New()
 
 func Start() {
-	syncAll()
-	c.AddFunc(config.Cron, syncAll)
+	syncData()
+	c.AddFunc(config.Cron, syncData)
 	c.Start()
 }
 
@@ -25,10 +25,14 @@ func Stop() {
 }
 
 func Sync() {
-	syncAll()
+	syncData()
 }
 
-func syncAll() {
+func sync() {
+
+}
+
+func syncData() {
 	utils.SyncVnd(config.Cve11ModifiedMetaUrl, config.Cve11ModifiedJsonUrl, config.TmpDir)
 	utils.SyncVnd(config.Cve11RecentMetaUrl, config.Cve11RecentJsonUrl, config.TmpDir)
 	for i := config.StartYear; i <= config.EndYear; i++ {
