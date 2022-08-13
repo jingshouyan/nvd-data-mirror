@@ -133,6 +133,7 @@ func gzUnpack(source, dist string) error {
 	if err != nil {
 		return err
 	}
+	defer gr.Close()
 	df, err := os.Create(dist)
 	if err != nil {
 		return err
