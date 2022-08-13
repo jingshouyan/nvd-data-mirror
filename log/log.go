@@ -8,6 +8,7 @@ import (
 func Println(v ...any) {
 	showInfo()
 	slog.Println(v...)
+
 }
 
 func Printf(format string, v ...any) {

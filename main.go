@@ -1,14 +1,12 @@
 package main
 
 import (
-	"fmt"
-	"strings"
+	"net/http"
 
-	"github.com/jingshouyan/nvd-data-mirror/log"
-
+	"github.com/gin-gonic/gin"
 	"github.com/jingshouyan/nvd-data-mirror/config"
-	"github.com/jingshouyan/nvd-data-mirror/utils"
-	cp "github.com/otiai10/copy"
+	"github.com/jingshouyan/nvd-data-mirror/job"
+	"github.com/jingshouyan/nvd-data-mirror/log"
 )
 
 var (
@@ -20,20 +18,24 @@ var (
 
 func main() {
 	log.Printf("nvd-data-mirror version: %s, commit: %s, built by: %s, built at: %s\n", version, commit, builtBy, date)
-	utils.SyncVnd(config.Cve11ModifiedMetaUrl, config.Cve11ModifiedJsonUrl, config.TmpDir)
-	utils.SyncVnd(config.Cve11RecentMetaUrl, config.Cve11RecentJsonUrl, config.TmpDir)
-	for i := config.StartYear; i <= config.EndYear; i++ {
-		metaUrl := fmt.Sprintf(config.Cve11BaseMetaUrl, i)
-		dataUrl := fmt.Sprintf(config.Cve11BaseJsonUrl, i)
-		utils.SyncVnd(metaUrl, dataUrl, config.TmpDir)
-	}
-	utils.SyncRetireJs(config.RetireJsUrl, config.TmpDir)
-	log.Println("Copy files [", config.TmpDir, "] to [", config.OutputDir, "]")
-	ops := cp.Options{
-		Skip: func(path string) (bool, error) {
-			return strings.Contains(path, ".tmp"), nil
-		},
-	}
-	cp.Copy(config.TmpDir, config.OutputDir, ops)
-	log.Println("Done.")
+	go job.Start()
+	defer job.Stop()
+	r := gin.Default()
+	r.GET("/", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"app":      "nvd-data-mirror",
+			"version":  version,
+			"commit":   commit,
+			"built_by": builtBy,
+			"built_at": date,
+		})
+	})
+	r.GET("/sync", func(ctx *gin.Context) {
+		go job.Sync()
+		ctx.JSON(http.StatusOK, gin.H{
+			"status": "ok",
+		})
+	})
+	r.StaticFS("/data", http.Dir(config.OutputDir))
+	r.Run(config.Addr)
 }
