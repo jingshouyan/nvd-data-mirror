@@ -3,6 +3,7 @@ package job
 import (
 	"fmt"
 	"strings"
+	"sync/atomic"
 
 	"github.com/jingshouyan/nvd-data-mirror/log"
 
@@ -13,10 +14,11 @@ import (
 )
 
 var c = cron.New()
+var b = &atomic.Bool{}
 
 func Start() {
-	syncData()
-	c.AddFunc(config.Cron, syncData)
+	sync()
+	c.AddFunc(config.Cron, sync)
 	c.Start()
 }
 
@@ -25,11 +27,16 @@ func Stop() {
 }
 
 func Sync() {
-	syncData()
+	sync()
 }
 
 func sync() {
-
+	if b.CompareAndSwap(false, true) {
+		syncData()
+		defer b.Store(false)
+	} else {
+		log.Println("sync is running, skip.")
+	}
 }
 
 func syncData() {
