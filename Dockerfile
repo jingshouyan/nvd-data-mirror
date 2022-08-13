@@ -1,4 +1,4 @@
-FROM httpd:alpine
+FROM busybox:stable
 
 ARG BUILD_DATE
 ARG BUILD_VERSION
@@ -16,22 +16,12 @@ LABEL org.label-schema.vcs-url="https://github.com/jingshouyan/nvd-data-mirror"
 LABEL org.label-schema.vendor="jingshouyan"
 LABEL org.label-schema.version=$BUILD_VERSION
 
-ENV user=mirror
+COPY nvd-data-mirror /  docker/entry-point.sh /
 
-COPY nvd-data-mirror /  docker/ /
+RUN chmod +x /entry-point.sh
 
-
-RUN apk update                                               && \
-    apk add --no-cache dcron nss supervisor                  && \
-    addgroup -S $user                                        && \
-    adduser -S $user -G $user                                && \
-    mkdir -p /tmp/nvd                                        && \
-    chown -R $user:$user /tmp/nvd                            && \
-    chown -R $user:$user /usr/local/apache2/htdocs           && \
-    rm -v /usr/local/apache2/htdocs/index.html               && \
-    chmod +x /mirror.sh
-
+VOLUME [ "/data" ]
 
 EXPOSE 80/tcp
 
-CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/conf.d/supervisord.conf", "-l", "/var/log/supervisord.log", "-j", "/var/run/supervisord.pid"]
+ENTRYPOINT [ "/entry-point.sh" ]
