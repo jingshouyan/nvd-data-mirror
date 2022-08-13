@@ -3,6 +3,7 @@ module github.com/jingshouyan/nvd-data-mirror
 go 1.19
 
 require (
+	github.com/gin-contrib/pprof v1.4.0
 	github.com/gin-gonic/gin v1.8.1
 	github.com/otiai10/copy v1.7.0
 	github.com/robfig/cron/v3 v3.0.1
