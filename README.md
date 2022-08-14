@@ -1,4 +1,4 @@
-[![License](https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg)](License)
+[![License](https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg)](LICENSE)
 # nvd-data-mirror
 
 为 maven 插件 org.owasp:dependency-check-maven 提供数据镜像服务，同时包含 cve 和 retireJs 数据。
