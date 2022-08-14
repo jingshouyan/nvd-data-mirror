@@ -37,7 +37,7 @@ func init() {
 	pflag.IntVar(&EndYear, "end-year", time.Now().Year(), "End year")
 	pflag.StringVar(&TmpDir, "tmp-dir", "./tmp/nvd", "Output directory")
 	pflag.StringVar(&OutputDir, "output-dir", "./data", "Output directory")
-	pflag.StringVar(&Cron, "cron", "0 0 */4 * * ?", "Cron expression")
+	pflag.StringVar(&Cron, "cron", "0 */4 * * *", "Cron expression")
 	pflag.StringVar(&Addr, "addr", ":80", "Listen address")
 	pflag.Parse()
 	if !strings.HasPrefix(Cve11ModifiedMetaUrl, "http") {
