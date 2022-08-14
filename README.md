@@ -1,3 +1,5 @@
+![release](https://img.shields.io/github/v/release/jingshouyan/nvd-data-mirror)
+![version](https://img.shields.io/github/go-mod/go-version/jingshouyan/nvd-data-mirror)
 [![License](https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg)](LICENSE)
 # nvd-data-mirror
 
