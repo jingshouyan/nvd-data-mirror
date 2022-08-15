@@ -32,6 +32,7 @@ ${nvd-data-mirror-host} 替换为服务器地址
                     <goal>check</goal>
                 </goals>
                 <configuration>
+                    # cve 数据相关配置，其他配置请参考 dependency-check-maven 配置文档
                     <cveUrlBase>${nvd-data-mirror-host}/data/nvdcve-1.1-%d.json.gz</cveUrlBase>
                     <cveUrlModified>${nvd-data-mirror-host}/data/nvdcve-1.1-modified.json.gz</cveUrlModified>
                     <retireJsUrl>${nvd-data-mirror-host}/data/jsrepository.json</retireJsUrl>
@@ -44,7 +45,7 @@ ${nvd-data-mirror-host} 替换为服务器地址
 ## Docker
 
 ```bash
-docker run -d -p 80:80 -v /path/to/nvd-data-mirror:/data nvd-data-mirror:latest
+docker run -d -p 80:80 -v /path/to/nvd-data-mirror:/data jingshouyan/nvd-data-mirror:latest
 ```
 
 ## Kubernetes
