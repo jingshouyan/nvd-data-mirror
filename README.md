@@ -17,6 +17,30 @@ cd /path/to/nvd-data-mirror
 ./nvd-data-mirror
 ```
 
+maven 配置
+
+${nvd-data-mirror-host} 替换为服务器地址
+
+```xml
+                <plugin>
+                    <groupId>org.owasp</groupId>
+                    <artifactId>dependency-check-maven</artifactId>
+                    <version>${dependency-check-maven.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                            <configuration>
+                                <cveUrlBase>${nvd-data-mirror-host}/data/nvdcve-1.1-%d.json.gz</cveUrlBase>
+                                <cveUrlModified>${nvd-data-mirror-host}/data/nvdcve-1.1-modified.json.gz</cveUrlModified>
+                                <retireJsUrl>${nvd-data-mirror-host}/data/jsrepository.json</retireJsUrl>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+```
+
 ## Docker
 
 ```bash
