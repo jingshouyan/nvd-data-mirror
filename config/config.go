@@ -2,7 +2,6 @@ package config
 
 import (
 	"strings"
-	"time"
 
 	"github.com/spf13/pflag"
 )
@@ -17,7 +16,6 @@ var (
 	Cve11BaseMetaUrl     string
 	RetireJsUrl          string
 	StartYear            int
-	EndYear              int
 	TmpDir               string
 	OutputDir            string
 	Cron                 string
@@ -34,7 +32,6 @@ func init() {
 	pflag.StringVar(&Cve11BaseMetaUrl, "cve-base-meta-url", "nvdcve-1.1-%d.meta", "NVD CVE 1.1 JSON base meta url")
 	pflag.StringVar(&RetireJsUrl, "retire-json-url", "https://cdn.jsdelivr.net/gh/Retirejs/retire.js@master/repository/jsrepository.json", "retrieJs repository url")
 	pflag.IntVar(&StartYear, "start-year", 2002, "Start year")
-	pflag.IntVar(&EndYear, "end-year", time.Now().Year(), "End year")
 	pflag.StringVar(&TmpDir, "tmp-dir", "./tmp/nvd", "Output directory")
 	pflag.StringVar(&OutputDir, "output-dir", "./data", "Output directory")
 	pflag.StringVar(&Cron, "cron", "0 */4 * * *", "Cron expression")

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 	"sync/atomic"
+	"time"
 
 	"github.com/jingshouyan/nvd-data-mirror/log"
 
@@ -40,9 +41,10 @@ func sync() {
 }
 
 func syncData() {
+	endYear := time.Now().Year()
 	utils.SyncVnd(config.Cve11ModifiedMetaUrl, config.Cve11ModifiedJsonUrl, config.TmpDir)
 	utils.SyncVnd(config.Cve11RecentMetaUrl, config.Cve11RecentJsonUrl, config.TmpDir)
-	for i := config.StartYear; i <= config.EndYear; i++ {
+	for i := config.StartYear; i <= endYear; i++ {
 		metaUrl := fmt.Sprintf(config.Cve11BaseMetaUrl, i)
 		dataUrl := fmt.Sprintf(config.Cve11BaseJsonUrl, i)
 		utils.SyncVnd(metaUrl, dataUrl, config.TmpDir)
