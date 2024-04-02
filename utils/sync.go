@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"strings"
 	"time"
@@ -45,7 +44,7 @@ func syncRetireJs(retireJsRrl, outDir string) error {
 }
 
 func validJson(filepath string) bool {
-	b, err := ioutil.ReadFile(filepath)
+	b, err := os.ReadFile(filepath)
 	if err != nil {
 		return false
 	}
